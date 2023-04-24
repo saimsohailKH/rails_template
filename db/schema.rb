@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_24_081914) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_24_120759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,6 +43,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_081914) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "carts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "status", default: 0, null: false
+    t.decimal "sub_total", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "line_items_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.bigint "cart_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+    t.index ["product_id"], name: "index_line_items_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", limit: 256, null: false
     t.text "description", null: false
@@ -61,4 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_081914) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "carts", "users"
+  add_foreign_key "line_items", "carts"
+  add_foreign_key "line_items", "products"
 end

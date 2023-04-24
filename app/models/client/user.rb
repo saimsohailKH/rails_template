@@ -12,5 +12,6 @@
 
 module Client
   class User < User
+    has_many :carts
   end
 end
