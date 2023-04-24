@@ -2,7 +2,9 @@ class AuthenticateUser
   include Interactor
 
   def call
-    if user = User.authenticate(context.email, context.password)
+    user = User.authenticate(context.email, context.password)
+
+    if user
       context.user = user
       context.token = user.secret_token
     else
