@@ -17,6 +17,7 @@ gem "turbo-rails"
 gem "tzinfo-data", platforms: %i(mingw mswin x64_mingw jruby)
 gem "interactor", "~> 3.0"
 gem 'jwt'
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem "debug", platforms: %i(mri mingw x64_mingw)

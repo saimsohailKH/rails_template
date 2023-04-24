@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     if result.success?
       session[:user_token] = result.token
 
-      redirect_to result.user
+      redirect_to result.user.admin? ? admin_products_path : client_products_path
     else
       @user = result.user
       flash.now[:message] = t(result.message)
