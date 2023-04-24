@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'application#index'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resource :session,      only: %i[create destroy]
+  resource :registration, only: %i[new create]
+
+  namespace :admin do
+    resources :products, only: %i[index new create destroy]
+  end
 end

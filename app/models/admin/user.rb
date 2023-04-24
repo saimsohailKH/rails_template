@@ -1,0 +1,16 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  email           :string(256)
+#  password_digest :string
+#  type            :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+module Admin
+  class User < User
+  end
+end
